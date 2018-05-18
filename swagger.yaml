@@ -1,0 +1,137 @@
+info:
+  description: TP server doc
+  version: 1.0.0
+  title: TP Server Swagger
+schemes:
+- http
+paths:
+
+  /user:
+
+    post:
+      summary: Add a new user
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: User object that needs to be added to the store
+        required: true
+        schema:
+          type: object
+          properties:
+            username:
+              required: true
+              type: string
+            firstname: 
+              type: string
+            lastname:
+              type: string
+      responses:
+        200:
+          description: successful operation - return created user
+          schema:
+            $ref: "#/definitions/User"
+        400:
+          description: Username is required
+
+    get:
+      summary: List all users
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        200:
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/User"
+          
+  /user/{userId}:
+
+    get:
+      summary: Find user by ID
+      description: Returns a single user
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: userId
+        in: path
+        description: ID of user to return
+        required: true
+        type: integer
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: "#/definitions/User"
+        400:
+          description: Invalid ID supplied
+        404:
+          description: User not found
+          
+    post:
+      summary: Updates a user in the store
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: userId
+        in: path
+        description: ID of user that needs to be updated
+        required: true
+        type: integer
+      - name: body
+        in: body
+        description: image file in base64 and sentry ticket ID
+        required: true
+        schema:
+          type: object
+          properties:
+            firstname:
+              description: Updated firstname of the user
+              type: string
+            lastname:
+              description: Updated lastname of the user
+              type: string
+      responses:
+        200:
+          description: successful operation - return updated user
+          schema:
+            $ref: "#/definitions/User"
+    delete:
+      summary: Deletes a user
+      produces:
+      - application/json
+      parameters:
+      - name: userId
+        in: path
+        description: User id to delete
+        required: true
+        type: integer
+      responses:
+        400:
+          description: Invalid ID supplied
+        404:
+          description: User not found
+    
+definitions:
+  User:
+    type: object
+    properties:
+      id:
+        type: integer
+      username:
+        type: string
+        require: true
+      firstName:
+        type: string
+      lastName:
+        type: string
