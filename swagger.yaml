@@ -7,7 +7,6 @@ schemes:
 paths:
 
   /user:
-
     post:
       summary: Add a new user
       consumes:
@@ -51,8 +50,8 @@ paths:
             items:
               $ref: "#/definitions/User"
           
-  /user/{userId}:
 
+  /user/{userId}:
     get:
       summary: Find user by ID
       description: Returns a single user
@@ -106,6 +105,7 @@ paths:
           description: successful operation - return updated user
           schema:
             $ref: "#/definitions/User"
+
     delete:
       summary: Deletes a user
       produces:
@@ -123,6 +123,7 @@ paths:
           description: User not found
     
 definitions:
+  
   User:
     type: object
     properties:
